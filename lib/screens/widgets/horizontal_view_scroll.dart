@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:moviesapp/screens/movies_detail.dart';
 
 class HorizontalViewScroll extends StatelessWidget {
   final List<dynamic> movies;
@@ -13,7 +14,9 @@ class HorizontalViewScroll extends StatelessWidget {
           final movie = movies[index];
           return GestureDetector(
             onTap: () {
-              // Handle tap
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return MoviesDetail(movie: movie);
+              }));
             },
             child: Container(
               margin: const EdgeInsets.symmetric(horizontal: 8),

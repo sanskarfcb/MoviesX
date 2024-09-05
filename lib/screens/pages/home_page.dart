@@ -21,22 +21,25 @@ class _HomePageState extends State<HomePage> {
   Widget searchBar() {
     return Container(
       margin: const EdgeInsets.all(12),
-      decoration:
-          BoxDecoration(borderRadius: BorderRadius.circular(16), boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          spreadRadius: 2,
-          blurRadius: 5,
-          offset: Offset(0, 3),
-        )
-      ]),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: Offset(0, 3),
+          ),
+        ],
+      ),
       padding: const EdgeInsets.all(4),
       child: const TextField(
-          decoration: InputDecoration(
-        prefixIcon: Icon(Icons.search),
-        hintText: 'Search Movies',
-        border: InputBorder.none,
-      )),
+        decoration: InputDecoration(
+          prefixIcon: Icon(Icons.search),
+          hintText: 'Search Movies',
+          border: InputBorder.none,
+        ),
+      ),
     );
   }
 
@@ -58,53 +61,56 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-        child: Column(children: [
-      const SizedBox(height: 30),
-      searchBar(),
-      _isLoading
-          ? CircularProgressIndicator()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Top Rated Movies',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                MovieSlider(topRatedMovies: topRatedMovies),
-                const SizedBox(
-                  height: 20,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Popular Movies',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                HorizontalViewScroll(movies: popularMovies),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Text(
-                    'Upcoming Movies',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                HorizontalViewScroll(movies: upcomingMovies),
-              ],
-            )
-    ]));
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 30),
+              searchBar(),
+              const SizedBox(height: 20),
+              _isLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Top Rated Movies',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        MovieSlider(topRatedMovies: topRatedMovies),
+                        const SizedBox(height: 30),
+                        const Text(
+                          'Popular Movies',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        HorizontalViewScroll(movies: popularMovies),
+                        const SizedBox(height: 30),
+                        const Text(
+                          'Upcoming Movies',
+                          style: TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        HorizontalViewScroll(movies: upcomingMovies),
+                      ],
+                    ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
