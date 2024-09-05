@@ -8,6 +8,7 @@ class FilteredMoviesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+        itemCount: movies.length,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) {

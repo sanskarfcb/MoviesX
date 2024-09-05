@@ -33,11 +33,7 @@ class _HomePageState extends State<HomePage> {
               .where((movie) =>
                   movie['title'].toLowerCase().contains(query.toLowerCase()))
               .toList();
-      if (query.isEmpty) {
-        _isSearchEmpty = true;
-      } else {
-        _isSearchEmpty = false;
-      }
+      _isSearchEmpty = query.isEmpty;
     });
   }
 
@@ -51,19 +47,16 @@ class _HomePageState extends State<HomePage> {
             color: Colors.grey.withOpacity(0.3),
             spreadRadius: 2,
             blurRadius: 5,
-            offset: Offset(0, 3),
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       padding: const EdgeInsets.all(4),
       child: TextField(
         onChanged: (value) {
-          if (value.isEmpty)
-            _isSearchEmpty = true;
-          else
-            filterMovies(value);
+          filterMovies(value);
         },
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           prefixIcon: Icon(Icons.search),
           hintText: 'Search Movies',
           border: InputBorder.none,
@@ -102,54 +95,59 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 20),
               _isLoading
                   ? const Center(child: CircularProgressIndicator())
-                  : _isSearchEmpty
-                      ? Column(children: [
-                          Padding(
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                              'Filtered Movies',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold,
-                              ),
+                  : !_isSearchEmpty && filteredMovies.isEmpty
+                      ? const Center(child: Text('No movies found'))
+                      : _isSearchEmpty
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Top Rated Movies',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                MovieSlider(topRatedMovies: topRatedMovies),
+                                const SizedBox(height: 30),
+                                const Text(
+                                  'Popular Movies',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                HorizontalViewScroll(movies: popularMovies),
+                                const SizedBox(height: 30),
+                                const Text(
+                                  'Upcoming Movies',
+                                  style: TextStyle(
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                HorizontalViewScroll(movies: upcomingMovies),
+                              ],
+                            )
+                          : Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Padding(
+                                  padding: EdgeInsets.all(16),
+                                  child: Text(
+                                    'Filtered Movies',
+                                    style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                FilteredMoviesList(movies: filteredMovies),
+                              ],
                             ),
-                          ),
-                          FilteredMoviesList(movies: filteredMovies)
-                        ])
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Top Rated Movies',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            MovieSlider(topRatedMovies: topRatedMovies),
-                            const SizedBox(height: 30),
-                            const Text(
-                              'Popular Movies',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            HorizontalViewScroll(movies: popularMovies),
-                            const SizedBox(height: 30),
-                            const Text(
-                              'Upcoming Movies',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            HorizontalViewScroll(movies: upcomingMovies),
-                          ],
-                        ),
             ],
           ),
         ),

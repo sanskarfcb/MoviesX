@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviesapp/screens/home.dart';
+import 'package:moviesapp/screens/splash.dart';
 
 void main() {
   runApp(MovieApp());
@@ -32,7 +33,7 @@ class MovieApp extends StatelessWidget {
           actionsIconTheme: IconThemeData(color: Colors.white),
         ),
       ),
-      home: HomeScreen(),
+      home: const Splash(),
     );
   }
 }
